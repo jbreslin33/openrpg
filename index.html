@@ -11,6 +11,8 @@ canvas {
 </head>
 <body onload="startGame()">
 <p id="coordinates_direction"></p>
+<img id="wall" width="200" height="200" src="wall.jpg" alt="wall">
+<img id="hallway" width="200" height="200" src="hallway.jpg" alt="hallway">
 
 <script>
 var myGamePiece;
@@ -21,6 +23,7 @@ var mD = 0;
 
 
 document.getElementById("coordinates_direction").innerHTML = "coordinates:";
+
 
 function startGame() {
     myGameArea.start();
@@ -41,8 +44,8 @@ function show_image(src, width, height, alt) {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 1;
-        this.canvas.height = 1;
+        this.canvas.width = 300;
+        this.canvas.height = 300;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
@@ -69,7 +72,8 @@ var myGameArea = {
                         mD = 0;
                 }
                 document.getElementById("coordinates_direction").innerHTML = "mD:" + mD;
-        }
+	}
+
         })
 
 	
@@ -85,8 +89,35 @@ var myGameArea = {
     }
 }
 
+function drawImage(img) {
+ var imageObj = new Image();
+      imageObj.onload = function() {
+        myGameArea.context.drawImage(imageObj, 69, 50);
+      };
+      imageObj.src = '' + img;
+
+
+}
 
 function updateGameArea() {
+if (mD == 0)
+{
+	drawImage("wall.jpg");
+}
+if (mD == 1)
+{
+	drawImage("hallway.jpg");
+}
+if (mD == 2)
+{
+	drawImage("wall.jpg");
+}
+if (mD == 3)
+{
+	drawImage("hallway.jpg");
+}
+
+
 /*
     myGameArea.clear();
     myGamePiece.moveAngle = 0;
