@@ -1,6 +1,8 @@
 DROP TABLE users;
 DROP TABLE parties_characters;
 DROP TABLE characters;
+DROP TABLE race;
+DROP TABLE class;
 DROP TABLE parties;
 
 --USERS
@@ -26,10 +28,25 @@ CREATE TABLE parties (
         PRIMARY KEY (id)
 );
 
+CREATE TABLE race (
+        id SERIAL,
+        name text UNIQUE,
+        PRIMARY KEY (id)
+);
+
+CREATE TABLE class (
+        id SERIAL,
+        name text UNIQUE,
+        PRIMARY KEY (id)
+);
+
+
 --CHARACTERS
 CREATE TABLE characters (
         id SERIAL,
         name text UNIQUE,
+	race_id integer, --human,elf,dwarf,halfling,kobold,goblin,orc,dragon,demon,wraith,stone_golem
+	class_id integer, --wizard,thief,fighter,cleric
 	x integer, 
 	y integer, 
 	z integer, 
@@ -38,11 +55,15 @@ CREATE TABLE characters (
 	current_hitpoints integer, 
 	level integer, 
 	experience integer, 
-	party_id integer,
+	party_id integer, --can monsters be in parties???? can parties be bigger than 6??? hordes???? of parties and monsters???? economies of scale the bigger the party the less the share of experience points so you want to find a balance.
         PRIMARY KEY (id),
-	FOREIGN KEY (party_id) REFERENCES parties(id)
+	FOREIGN KEY (party_id) REFERENCES parties(id),
+	FOREIGN KEY (race_id) REFERENCES race(id),
+	FOREIGN KEY (class_id) REFERENCES class(id)
 
 );
+
+
 
 --PARTIES_CHARACTERS
 CREATE TABLE parties_characters (
