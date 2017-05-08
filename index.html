@@ -10,31 +10,72 @@ canvas {
 </style>
 </head>
 <body onload="startGame()">
+<p id="coordinates_direction"></p>
 
 <script>
 var myGamePiece;
+var mX = 0;
+var mY = 0;
+var mZ = 0;
+var mD = 0;
+
+
+document.getElementById("coordinates_direction").innerHTML = "coordinates:";
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 225, 225);
+    myGamePiece = new component(30, 30, "green", 225, 225);
     myGameArea.start();
+show_image("wall.jpg", 200,200);
+}
+
+function show_image(src, width, height, alt) {
+    var img = document.createElement("img");
+    img.src = src;
+    img.width = width;
+    img.height = height;
+    img.alt = alt;
+
+    // This next line will just add it to the <body> tag
+    document.body.appendChild(img);
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
+        this.canvas.width = 1;
+        this.canvas.height = 1;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
-        window.addEventListener('keydown', function (e) {
+        window.addEventListener('keypress', function (e) {
             e.preventDefault();
             myGameArea.keys = (myGameArea.keys || []);
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+            myGameArea.keys[e.keyCode] = (e.type == "keypress");
+	if (e.keyCode == 37)
+	{
+		mD = mD - 1;	
+		if (mD < 0)
+		{
+			mD = 3;
+		}  
+		document.getElementById("coordinates_direction").innerHTML = "mD:" + mD;
+        }
+
+        if (e.keyCode == 39)
+        {
+                mD = mD + 1; 
+                if (mD > 3)
+                {
+                        mD = 0;
+                }
+                document.getElementById("coordinates_direction").innerHTML = "mD:" + mD;
+        }
         })
+
+	
         window.addEventListener('keyup', function (e) {
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+            //myGameArea.keys[e.keyCode] = (e.type == "keydown");
         })
     },
     stop : function() {
@@ -71,20 +112,23 @@ function component(width, height, color, x, y, type) {
     }
 }
 
+
 function updateGameArea() {
+/*
     myGameArea.clear();
     myGamePiece.moveAngle = 0;
     myGamePiece.speed = 0;
-    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.moveAngle = -1; }
+    if (myGameArea.keys && myGameArea.keys[37]) { mX = mX -1; }
     if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.moveAngle = 1; }
     if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speed= 1; }
     if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speed= -1; }
     myGamePiece.newPos();
     myGamePiece.update();
+
+	document.getElementById("coordinates_direction").innerHTML = "mX:" + mX;
+*/
 }
 </script>
-
-<p>Make sure the gamearea has focus, and use the arrow keys to move the red square around.</p>
 
 </body>
 </html>
