@@ -10,9 +10,7 @@ canvas {
 </style>
 </head>
 <body onload="startGame()">
-<p id="coordinates_direction"></p>
-<img id="wall" width="200" height="200" src="wall.jpg" alt="wall">
-<img id="hallway" width="200" height="200" src="hallway.jpg" alt="hallway">
+<p id="hud"></p>
 
 <script>
 var myGamePiece;
@@ -22,23 +20,11 @@ var mZ = 0;
 var mD = 0;
 
 
-document.getElementById("coordinates_direction").innerHTML = "coordinates:";
+document.getElementById("hud").innerHTML = "coordinates:";
 
 
 function startGame() {
     myGameArea.start();
-show_image("wall.jpg", 200,200);
-}
-
-function show_image(src, width, height, alt) {
-    var img = document.createElement("img");
-    img.src = src;
-    img.width = width;
-    img.height = height;
-    img.alt = alt;
-
-    // This next line will just add it to the <body> tag
-    document.body.appendChild(img);
 }
 
 var myGameArea = {
@@ -61,7 +47,7 @@ var myGameArea = {
 		{
 			mD = 3;
 		}  
-		document.getElementById("coordinates_direction").innerHTML = "mD:" + mD;
+		document.getElementById("hud").innerHTML = "mD:" + mD;
         }
 
         if (e.keyCode == 39)
@@ -71,14 +57,12 @@ var myGameArea = {
                 {
                         mD = 0;
                 }
-                document.getElementById("coordinates_direction").innerHTML = "mD:" + mD;
+                document.getElementById("hud").innerHTML = "mD:" + mD;
 	}
 
         })
 
-	
         window.addEventListener('keyup', function (e) {
-            //myGameArea.keys[e.keyCode] = (e.type == "keydown");
         })
     },
     stop : function() {
