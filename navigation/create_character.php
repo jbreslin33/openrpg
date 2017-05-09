@@ -14,17 +14,28 @@
 </ul>
 
 <?php
+session_start();
 include(getenv("DOCUMENT_ROOT") . "/src/database/db_connect.php");
 $conn = dbConnect();
 
 echo "<br>";
 
 //check for submit
-if (isset($_POST["class_id"]))
+if (isset($_POST["race_id"]) && isset($_POST["class_id"]) && isset($_POST["name"]) )
 {
-	$t = 'class_id:';
-	$t .= $_POST["class_id"];
-	error_log($t);
+$insert = "insert into characters (name,user_id,race_id,class_id,full_hitpoints,current_hitpoints) values ('";
+$insert .= $_POST["name"];  
+$insert .= "',";  
+$insert .= $_SESSION["USER_ID"];  
+$insert .= ",";  
+$insert .= $_POST["race_id"];  
+$insert .= ",";  
+$insert .= $_POST["class_id"];  
+$insert .= ",10,10);";  
+
+error_log($insert);
+
+$result = pg_query($conn,$insert);
 }
 
 

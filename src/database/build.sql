@@ -48,14 +48,14 @@ CREATE TABLE characters (
 	user_id integer, 
 	race_id integer, --human,elf,dwarf,halfling,kobold,goblin,orc,dragon,demon,wraith,stone_golem
 	class_id integer, --wizard,thief,fighter,cleric
-	x integer, 
-	y integer, 
-	z integer, 
-	d integer, 
+	x integer DEFAULT 0, 
+	y integer DEFAULT 0, 
+	z integer DEFAULT 0, 
+	d integer DEFAULT 0, 
 	full_hitpoints integer, 
 	current_hitpoints integer, 
-	level integer, 
-	experience integer, 
+	level integer DEFAULT 1, 
+	experience integer DEFAULT 0, 
 	party_id integer, --can monsters be in parties???? can parties be bigger than 6??? hordes???? of parties and monsters???? economies of scale the bigger the party the less the share of experience points so you want to find a balance.
         PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES users(id),
