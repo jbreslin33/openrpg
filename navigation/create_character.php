@@ -19,50 +19,46 @@ $conn = dbConnect();
 
 echo "<br>";
 ?>
-	<p><b> Select Student: </p></b>
+
+<p><b> Create Character </p></b>
 	
-	<form method="post" action="/navigation/create_character.php">
+<form method="post" action="/navigation/create_character.php">
 
-<select name="user_id">
-
+<select name="race_id">
 <?php
-/*
-$query = "select id, username, first_name, last_name, score from users where school_id = ";
-$query .= $_SESSION["school_id"];
-$query .= " order by last_name;";
-
+$query = "select id, name from race order by name asc;";
 $result = pg_query($conn,$query);
 $numrows = pg_numrows($result);
-
 
 for($i = 0; $i < $numrows; $i++) 
 {
       	$row = pg_fetch_array($result, $i);
-	$string = $row[0];
-	$string .= " ";
-	$string .= $row[1];
-	$string .= " ";
-	$string .= $row[2];
-	$string .= " ";
-	$string .= $row[3];
-	$string .= " ";
-	$string .= $row[4];
-      	echo "<option value=\"$row[0]\">$string</option>";
+      	echo "<option value=\"$row[0]\">$row[1]</option>";
 }
-*/
 ?>
 </select>
 
-<p><b> FIRST NAME: </p></b>
+<select name="class_id">
+<?php
+$query = "select id, name from class order by name asc;";
+$result = pg_query($conn,$query);
+$numrows = pg_numrows($result);
 
-
-<input type="text" name="first_name">
-
+for($i = 0; $i < $numrows; $i++)
+{
+        $row = pg_fetch_array($result, $i);
+        echo "<option value=\"$row[0]\">$row[1]</option>";
+}
+?>
 </select>
 
-	<p><input type="submit" value="UPDATE" /></p>
 
-	</form>
+<p><b> Character name: </p></b>
+<input type="text" name="name">
+
+
+<p><input type="submit" value="CREATE CHARACTER" /></p>
+</form>
 	
 
 </body>
