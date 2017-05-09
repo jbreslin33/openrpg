@@ -11,6 +11,7 @@
 
 <ul>
 <li><a href="/logout.php">Logout</a></li>
+<li><a href="/navigation/create_character.php">Create Character</a></li>
 </ul>
 
 </body>
