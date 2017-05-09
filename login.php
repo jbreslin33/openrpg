@@ -1,4 +1,6 @@
 <?php
+include_once(getenv("DOCUMENT_ROOT") . "/src/php/application/application.php");
+
 session_start();
 $errorMsg = "";
 //$validUser = $_SESSION["login"] == true;
@@ -41,7 +43,12 @@ $num = pg_num_rows($result);
   else $_SESSION["login"] = true;
 }
 if($validUser) {
-   header("Location: /game.html"); die();
+   //header("Location: /game.html"); die();
+//create application and set session
+        $APPLICATION = new Application();
+        $_SESSION["APPLICATION"] = $APPLICATION;
+
+   header("Location: /src/php/application/application.php"); die();
 }
 ?>
 <!DOCTYPE html>
