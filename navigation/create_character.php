@@ -18,6 +18,16 @@ include(getenv("DOCUMENT_ROOT") . "/src/database/db_connect.php");
 $conn = dbConnect();
 
 echo "<br>";
+
+//check for submit
+if (isset($_POST["class_id"]))
+{
+	$t = 'class_id:';
+	$t .= $_POST["class_id"];
+	error_log($t);
+}
+
+
 ?>
 
 <p><b> Create Character </p></b>
