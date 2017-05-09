@@ -4,7 +4,7 @@ include_once(getenv("DOCUMENT_ROOT") . "/src/php/fsm/state.php");
 include_once(getenv("DOCUMENT_ROOT") . "/src/php/application/states/states.php");
 
 //start new session
-session_start();
+//session_start();
 ?>
 
 <?php

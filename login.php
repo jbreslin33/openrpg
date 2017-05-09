@@ -33,6 +33,7 @@ $num = pg_num_rows($result);
 		$validUser = true;
                 //get the id from user table
                 $id = pg_Result($result, 0, 'id');
+        	$_SESSION["USER_ID"] = $id;
         }
         else
         {
@@ -43,8 +44,8 @@ $num = pg_num_rows($result);
   else $_SESSION["login"] = true;
 }
 if($validUser) {
-   //header("Location: /game.html"); die();
-//create application and set session
+
+	//create application and set session
         $APPLICATION = new Application();
         $_SESSION["APPLICATION"] = $APPLICATION;
 
