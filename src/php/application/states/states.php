@@ -71,6 +71,8 @@ public function enter($bapplication)
         if ($bapplication->mLogs == true)
         {
                 error_log('ADMIN Enter');
+		header("Location: /navigation/main_menu.php"); die();
+
         }
 }
 public function execute($bapplication)
