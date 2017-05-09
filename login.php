@@ -59,7 +59,7 @@ if($validUser) {
 </head>
 <body>
   <form name="input" action="" method="post">
-    <label for="username">Username:</label><input type="text" value="<?= $_POST["username"] ?>" id="username" name="username" />
+    <label for="username">Username:</label><input type="text" value="" id="username" name="username" />
     <label for="password">Password:</label><input type="password" value="" id="password" name="password" />
     <div class="error"><?= $errorMsg ?></div>
     <input type="submit" value="Home" name="sub" />
