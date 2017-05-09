@@ -80,6 +80,10 @@ for($i = 0; $i < $numrows; $i++)
 
 <p><input type="submit" value="CREATE CHARACTER" /></p>
 </form>
+
+
+
+
 	
 
 </body>
