@@ -33,10 +33,18 @@ $insert .= ",";
 $insert .= $_POST["class_id"];  
 $insert .= ",10,10);";  
 
-error_log($insert);
-
 $result = pg_query($conn,$insert);
 }
+if (isset($_POST["name_id"])) 
+{
+$query = "delete from characters where id = ";
+$query .= $_POST["name_id"];
+$query .= ";";
+
+$result = pg_query($conn,$query);
+
+}
+
 
 
 ?>
@@ -81,9 +89,38 @@ for($i = 0; $i < $numrows; $i++)
 <p><input type="submit" value="CREATE CHARACTER" /></p>
 </form>
 
+
+<p><b> Delete Character </p></b>
+
+<form method="post" action="/navigation/create_character.php">
+
+<select name="name_id">
+<?php
+$query = "select id, name from characters where user_id = ";
+$query .= $_SESSION["USER_ID"];  
+$query .= ";";
+
+$result = pg_query($conn,$query);
+$numrows = pg_numrows($result);
+
+for($i = 0; $i < $numrows; $i++)
+{
+        $row = pg_fetch_array($result, $i);
+        echo "<option value=\"$row[0]\">$row[1]</option>";
+}
+?>
+</select>
+
+<p><input type="submit" value="DELETE CHARACTER" /></p>
+</form>
+
+
+
 <?php
 
-$query = "select characters.id, characters.name as name, race.name as race, class.name as class, full_hitpoints, current_hitpoints, level, experience, party_id  from characters JOIN race on race.id=characters.race_id JOIN class on class.id=characters.class_id where user_id = 1 order by name asc;";
+$query = "select characters.id, characters.name as name, race.name as race, class.name as class, full_hitpoints, current_hitpoints, level, experience, party_id  from characters JOIN race on race.id=characters.race_id JOIN class on class.id=characters.class_id where user_id = ";
+$query .= $_SESSION["USER_ID"];
+$query .= " order by name asc;";
 
 $result = pg_query($conn,$query);
 $numrows = pg_numrows($result);
