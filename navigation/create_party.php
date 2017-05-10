@@ -25,34 +25,6 @@ $conn = dbConnect();
 
 echo "<br>";
 
-//check for submit
-if (isset($_POST["race_id"]) && isset($_POST["class_id"]) && isset($_POST["name"]) )
-{
-if ($_POST["name"] != '')
-{
-
-$insert = "insert into characters (name,user_id,race_id,class_id,full_hitpoints,current_hitpoints) values ('";
-$insert .= $_POST["name"];  
-$insert .= "',";  
-$insert .= $_SESSION["USER_ID"];  
-$insert .= ",";  
-$insert .= $_POST["race_id"];  
-$insert .= ",";  
-$insert .= $_POST["class_id"];  
-$insert .= ",10,10);";  
-
-$result = pg_query($conn,$insert);
-}
-}
-
-if (isset($_POST["name_id"])) 
-{
-$query = "delete from characters where id = ";
-$query .= $_POST["name_id"];
-$query .= ";";
-$result = pg_query($conn,$query);
-}
-
 if ($_POST["party_name"] != '')
 {
 $insert = "insert into parties (name,user_id) values ('";
@@ -76,66 +48,6 @@ $result = pg_query($conn,$query);
 <table style="width:100%">
 <tr align="left">
 </tr>
-
- <tr>
-
-<td>
-<b>CREATE CHARACTER</b>
-<form method="post" action="/navigation/create_character.php">
-<select name="race_id">
-<?php
-$query = "select id, name from race order by name asc;";
-$result = pg_query($conn,$query);
-$numrows = pg_numrows($result);
-
-for($i = 0; $i < $numrows; $i++) 
-{
-      	$row = pg_fetch_array($result, $i);
-      	echo "<option value=\"$row[0]\">$row[1]</option>";
-}
-?>
-</select>
-<select name="class_id">
-<?php
-$query = "select id, name from class order by name asc;";
-$result = pg_query($conn,$query);
-$numrows = pg_numrows($result);
-
-for($i = 0; $i < $numrows; $i++)
-{
-        $row = pg_fetch_array($result, $i);
-        echo "<option value=\"$row[0]\">$row[1]</option>";
-}
-?>
-</select>
-<p><b> Character name: </p></b>
-<input type="text" name="name">
-<p><input type="submit" value="CREATE CHARACTER" /></p>
-</form>
-</td>
-
-<td>
-<b>DELETE CHARACTER</b>
-<form method="post" action="/navigation/create_character.php">
-<select name="name_id">
-<?php
-$query = "select id, name from characters where user_id = ";
-$query .= $_SESSION["USER_ID"];  
-$query .= ";";
-$result = pg_query($conn,$query);
-$numrows = pg_numrows($result);
-for($i = 0; $i < $numrows; $i++)
-{
-        $row = pg_fetch_array($result, $i);
-        echo "<option value=\"$row[0]\">$row[1]</option>";
-}
-?>
-</select>
-<p><input type="submit" value="DELETE CHARACTER" /></p>
-</form>
-</td>
-
-  </tr>
 
 <tr>
 

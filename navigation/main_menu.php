@@ -11,7 +11,8 @@
 
 <ul>
 <li><a href="/logout.php">Logout</a></li>
-<li><a href="/navigation/create_character.php">Create Character</a></li>
+<li><a href="/navigation/create_character.php">Create/Edit Character</a></li>
+<li><a href="/navigation/create_party.php">Create/Edit Party</a></li>
 </ul>
 
 </body>
