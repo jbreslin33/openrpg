@@ -23,4 +23,9 @@ insert into characters (name,user_id,race_id,class_id,x,y,z,d,full_hitpoints,cur
 --monsters
 insert into characters (race_id,x,y,z,d,full_hitpoints,current_hitpoints,level,experience) values (2,2,0,0,0,3,3,1,0);
 
+--party
+insert into parties (name,user_id) values ('Classic',1);
+insert into parties (name,user_id) values ('Modern',1);
+
+
 
