@@ -22,13 +22,14 @@ CREATE TABLE users (
 --PARTIES
 CREATE TABLE parties (
         id SERIAL,
-        name text UNIQUE,
+        name text,
         x integer DEFAULT 0,
         y integer DEFAULT 0,
         z integer DEFAULT 0,
         d integer DEFAULT 0,
 	user_id integer,
 	FOREIGN KEY (user_id) REFERENCES users(id),
+	UNIQUE (user_id,name),
         PRIMARY KEY (id)
 );
 

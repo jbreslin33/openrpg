@@ -3,7 +3,6 @@ include_once(getenv("DOCUMENT_ROOT") . "/src/php/application/application.php");
 
 session_start();
 $errorMsg = "";
-//$validUser = $_SESSION["login"] == true;
 $validUser = true;
 $id = 0; 
 if(isset($_POST["sub"])) {
@@ -45,6 +44,38 @@ $num = pg_num_rows($result);
 
 		//get db result
 		$result = pg_query($mConnection,$query) or die('Could not connect: ' . pg_last_error());
+
+		//get id
+		$query = "select id from users where username = '";
+		$query .= $u;
+		$query .= "' and password = '";
+		$query .= $p;
+		$query .= "';";
+
+		//get db result
+		$result = pg_query($mConnection,$query) or die('Could not connect: ' . pg_last_error());
+
+		//get numer of rows
+		$num = pg_num_rows($result);
+
+		// if there is a row then the username and password pair exists
+        	if ($num > 0)
+        	{
+                	$id = pg_Result($result, 0, 'id');
+                	$_SESSION["USER_ID"] = $id;
+        	}
+		else
+		{
+			error_log('error');
+		}
+
+		//insert first party
+		$query = "insert into parties (name,user_id) values ('Classic',";
+		$query .= $_SESSION["USER_ID"];
+		$query .= ");";
+		
+		//get db result
+		$result = pg_query($mConnection,$query) or die('Could not connect: ' . pg_last_error());
         }
 
   if($validUser) $errorMsg = "Username taken.";
@@ -55,12 +86,10 @@ $num = pg_num_rows($result);
 
 }
 if(!$validUser) {
-
 	//create application and set session
         $APPLICATION = new Application();
         $_SESSION["APPLICATION"] = $APPLICATION;
-
-   header("Location: /src/php/application/application.php"); die();
+   	header("Location: /src/php/application/application.php"); die();
 }
 ?>
 <!DOCTYPE html>
