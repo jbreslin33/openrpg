@@ -23,6 +23,9 @@ echo "<br>";
 //check for submit
 if (isset($_POST["race_id"]) && isset($_POST["class_id"]) && isset($_POST["name"]) )
 {
+if ($_POST["name"] != '')
+{
+
 $insert = "insert into characters (name,user_id,race_id,class_id,full_hitpoints,current_hitpoints) values ('";
 $insert .= $_POST["name"];  
 $insert .= "',";  
@@ -34,7 +37,12 @@ $insert .= $_POST["class_id"];
 $insert .= ",10,10);";  
 
 $result = pg_query($conn,$insert);
+
 }
+
+}
+
+
 if (isset($_POST["name_id"])) 
 {
 $query = "delete from characters where id = ";
