@@ -27,6 +27,8 @@ CREATE TABLE parties (
         y integer,
         z integer,
         d integer,
+	user_id integer,
+	FOREIGN KEY (user_id) REFERENCES users(id),
         PRIMARY KEY (id)
 );
 

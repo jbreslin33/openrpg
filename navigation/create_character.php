@@ -4,6 +4,11 @@
 
 <head>
 	<title>CREATE CHARACTER</title>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
 </head>
 
 <body>
@@ -37,9 +42,7 @@ $insert .= $_POST["class_id"];
 $insert .= ",10,10);";  
 
 $result = pg_query($conn,$insert);
-
 }
-
 }
 
 if (isset($_POST["name_id"])) 
@@ -47,19 +50,37 @@ if (isset($_POST["name_id"]))
 $query = "delete from characters where id = ";
 $query .= $_POST["name_id"];
 $query .= ";";
-
 $result = pg_query($conn,$query);
-
 }
+
+if ($_POST["party_name"] != '')
+{
+$insert = "insert into parties (name,user_id) values ('";
+$insert .= $_POST["party_name"];
+$insert .= "',";
+$insert .= $_SESSION["USER_ID"];
+$insert .= ")";
+$result = pg_query($conn,$insert);
+}
+
+if (isset($_POST["party_name_id"])) 
+{
+$query = "delete from parties where id = ";
+$query .= $_POST["party_name_id"];
+$query .= ";";
+$result = pg_query($conn,$query);
+}
+
 ?>
 
 <table style="width:100%">
-  <tr align="left">
-    <th>Create Character</th>
-    <th>Delete Character</th> 
-  </tr>
-  <tr>
-    <td>
+<tr align="left">
+</tr>
+
+ <tr>
+
+<td>
+<b>CREATE CHARACTER</b>
 <form method="post" action="/navigation/create_character.php">
 <select name="race_id">
 <?php
@@ -91,10 +112,10 @@ for($i = 0; $i < $numrows; $i++)
 <input type="text" name="name">
 <p><input type="submit" value="CREATE CHARACTER" /></p>
 </form>
-
-
 </td>
-    <td>
+
+<td>
+<b>DELETE CHARACTER</b>
 <form method="post" action="/navigation/create_character.php">
 <select name="name_id">
 <?php
@@ -112,9 +133,44 @@ for($i = 0; $i < $numrows; $i++)
 </select>
 <p><input type="submit" value="DELETE CHARACTER" /></p>
 </form>
-
 </td>
+
   </tr>
+
+<tr>
+
+<td>
+<b>CREATE PARTY</b>
+<form method="post" action="/navigation/create_character.php">
+<p><b> Pary Name: </p></b>
+<input type="text" name="party_name">
+<p><input type="submit" value="CREATE PARTY" /></p>
+</form>
+</td>
+
+<td>
+<b>DELETE PARTY</b>
+<form method="post" action="/navigation/create_character.php">
+<select name="party_name_id">
+<?php
+$query = "select id, name from parties where user_id = ";
+$query .= $_SESSION["USER_ID"]; 
+$query .= ";";
+$result = pg_query($conn,$query);
+$numrows = pg_numrows($result);
+for($i = 0; $i < $numrows; $i++)
+{
+        $row = pg_fetch_array($result, $i);
+        echo "<option value=\"$row[0]\">$row[1]</option>";
+}
+?>
+</select>
+<p><input type="submit" value="DELETE PARTY" /></p>
+</form>
+</td>
+
+</tr>
+
 </table>
 
 
