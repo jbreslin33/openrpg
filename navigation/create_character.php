@@ -155,6 +155,8 @@ $numrows = pg_numrows($result);
 
 echo '<table border=\"1\">';
         echo '<tr>';
+        echo '<td> ID';
+        echo '</td>';
         echo '<td> NAME';
         echo '</td>';
         echo '<td> RACE';
@@ -178,12 +180,15 @@ echo '<table border=\"1\">';
                 $row = pg_fetch_array($result, $i);
 
                 echo '<tr>';
+
                 echo '<td>';
                 echo $row[0];
                 echo '</td>';
+
                 echo '<td>';
                 echo $row[1];
                 echo '</td>';
+
                 echo '<td>';
                 echo $row[2];
                 echo '</td>';
@@ -191,18 +196,27 @@ echo '<table border=\"1\">';
                 echo '<td>';
                 echo $row[3];
                 echo '</td>';
+
                 echo '<td>';
                 echo $row[4];
                 echo '</td>';
+
                 echo '<td>';
                 echo $row[5];
                 echo '</td>';
+
                 echo '<td>';
                 echo $row[6];
                 echo '</td>';
+
                 echo '<td>';
                 echo $row[7];
                 echo '</td>';
+
+                echo '<td>';
+                echo $row[8];
+                echo '</td>';
+
                 echo '</tr>';
         }
 
