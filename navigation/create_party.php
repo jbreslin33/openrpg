@@ -53,7 +53,7 @@ $result = pg_query($conn,$query);
 
 <td>
 <b>CREATE PARTY</b>
-<form method="post" action="/navigation/create_character.php">
+<form method="post" action="/navigation/create_party.php">
 <p><b> Pary Name: </p></b>
 <input type="text" name="party_name">
 <p><input type="submit" value="CREATE PARTY" /></p>
@@ -62,7 +62,7 @@ $result = pg_query($conn,$query);
 
 <td>
 <b>DELETE PARTY</b>
-<form method="post" action="/navigation/create_character.php">
+<form method="post" action="/navigation/create_party.php">
 <select name="party_name_id">
 <?php
 $query = "select id, name from parties where user_id = ";
@@ -88,7 +88,7 @@ for($i = 0; $i < $numrows; $i++)
 
 <?php
 
-$query = "select characters.id, characters.name as name, race.name as race, class.name as class, full_hitpoints, current_hitpoints, level, experience, party_id  from characters JOIN race on race.id=characters.race_id JOIN class on class.id=characters.class_id where user_id = ";
+$query = "select id, name, x, y, z, d from parties where user_id = ";
 $query .= $_SESSION["USER_ID"];
 $query .= " order by name asc;";
 
@@ -97,21 +97,17 @@ $numrows = pg_numrows($result);
 
 echo '<table border=\"1\">';
         echo '<tr>';
+        echo '<td> ID';
+        echo '</td>';
         echo '<td> NAME';
         echo '</td>';
-        echo '<td> RACE';
+        echo '<td> X';
         echo '</td>';
-        echo '<td> CLASS';
+        echo '<td> Y';
         echo '</td>';
-        echo '<td> FULL HIT POINTS';
+        echo '<td> Z';
         echo '</td>';
-        echo '<td> CURRENT HIT POINTS';
-        echo '</td>';
-        echo '<td> LEVEL';
-        echo '</td>';
-        echo '<td> EXPERIENCE';
-        echo '</td>';
-        echo '<td> PARTY';
+        echo '<td> D';
         echo '</td>';
         echo '</tr>';
 
@@ -129,7 +125,6 @@ echo '<table border=\"1\">';
                 echo '<td>';
                 echo $row[2];
                 echo '</td>';
-
                 echo '<td>';
                 echo $row[3];
                 echo '</td>';
@@ -139,13 +134,6 @@ echo '<table border=\"1\">';
                 echo '<td>';
                 echo $row[5];
                 echo '</td>';
-                echo '<td>';
-                echo $row[6];
-                echo '</td>';
-                echo '<td>';
-                echo $row[7];
-                echo '</td>';
-                echo '</tr>';
         }
 
         pg_free_result($result);

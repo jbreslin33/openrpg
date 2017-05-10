@@ -23,10 +23,10 @@ CREATE TABLE users (
 CREATE TABLE parties (
         id SERIAL,
         name text UNIQUE,
-        x integer,
-        y integer,
-        z integer,
-        d integer,
+        x integer DEFAULT 0,
+        y integer DEFAULT 0,
+        z integer DEFAULT 0,
+        d integer DEFAULT 0,
 	user_id integer,
 	FOREIGN KEY (user_id) REFERENCES users(id),
         PRIMARY KEY (id)
