@@ -4,7 +4,7 @@ include_once(getenv("DOCUMENT_ROOT") . "/src/php/application/application.php");
 session_start();
 $errorMsg = "";
 //$validUser = $_SESSION["login"] == true;
-$validUser = false;
+$validUser = true;
 $id = 0; 
 if(isset($_POST["sub"])) {
 
@@ -17,8 +17,6 @@ $p = $_POST["password"];
 
 $query = "select id from users where username = '";
 $query .= $u;
-$query .= "' and password = '";
-$query .= $p;
 $query .= "';";
 
 //get db result
@@ -38,12 +36,25 @@ $num = pg_num_rows($result);
         else
         {
 		$validUser = false;
+
+		$query = "insert into users (username,password) values ('";
+		$query .= $u;
+		$query .= "','";
+		$query .= $p;
+		$query .= "');";
+
+		//get db result
+		$result = pg_query($mConnection,$query) or die('Could not connect: ' . pg_last_error());
         }
 
-  if(!$validUser) $errorMsg = "Invalid username or password.";
-  else $_SESSION["login"] = true;
+  if($validUser) $errorMsg = "Username taken.";
+  else
+{
+
 }
-if($validUser) {
+
+}
+if(!$validUser) {
 
 	//create application and set session
         $APPLICATION = new Application();
@@ -63,7 +74,7 @@ if($validUser) {
     <label for="username">Username:</label><input type="text" value="" id="username" name="username" />
     <label for="password">Password:</label><input type="password" value="" id="password" name="password" />
     <div class="error"><?= $errorMsg ?></div>
-    <input type="submit" value="Login" name="sub" />
+    <input type="submit" value="JOIN" name="sub" />
   </form>
 </body>
 </html>
