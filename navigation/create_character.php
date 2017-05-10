@@ -26,12 +26,13 @@ $conn = dbConnect();
 echo "<br>";
 
 //check for submit
+//if (isset($_POST["race_id"]) && isset($_POST["class_id"]) && isset($_POST["name"]) && isset($POST["party_id"]) )
 if (isset($_POST["race_id"]) && isset($_POST["class_id"]) && isset($_POST["name"]) )
 {
 if ($_POST["name"] != '')
 {
 
-$insert = "insert into characters (name,user_id,race_id,class_id,full_hitpoints,current_hitpoints) values ('";
+$insert = "insert into characters (name,user_id,race_id,class_id,party_id,full_hitpoints,current_hitpoints) values ('";
 $insert .= $_POST["name"];  
 $insert .= "',";  
 $insert .= $_SESSION["USER_ID"];  
@@ -39,7 +40,11 @@ $insert .= ",";
 $insert .= $_POST["race_id"];  
 $insert .= ",";  
 $insert .= $_POST["class_id"];  
+$insert .= ",";  
+$insert .= $_POST["party_id"];  
 $insert .= ",10,10);";  
+
+error_log($insert);
 
 $result = pg_query($conn,$insert);
 }
@@ -63,6 +68,7 @@ $result = pg_query($conn,$query);
 <td>
 <b>CREATE CHARACTER</b>
 <form method="post" action="/navigation/create_character.php">
+
 <select name="race_id">
 <?php
 $query = "select id, name from race order by name asc;";
@@ -76,6 +82,7 @@ for($i = 0; $i < $numrows; $i++)
 }
 ?>
 </select>
+
 <select name="class_id">
 <?php
 $query = "select id, name from class order by name asc;";
@@ -89,6 +96,23 @@ for($i = 0; $i < $numrows; $i++)
 }
 ?>
 </select>
+
+<select name="party_id">
+<?php
+$query = "select id, name from parties where user_id = ";
+$query .= $_SESSION["USER_ID"];  
+$query .= " order by name asc;"; 
+$result = pg_query($conn,$query);
+$numrows = pg_numrows($result);
+
+for($i = 0; $i < $numrows; $i++)
+{
+        $row = pg_fetch_array($result, $i);
+        echo "<option value=\"$row[0]\">$row[1]</option>";
+}
+?>
+</select>
+
 <p><b> Character name: </p></b>
 <input type="text" name="name">
 <p><input type="submit" value="CREATE CHARACTER" /></p>
@@ -122,7 +146,6 @@ for($i = 0; $i < $numrows; $i++)
 
 
 <?php
-
 $query = "select characters.id, characters.name as name, race.name as race, class.name as class, full_hitpoints, current_hitpoints, level, experience, party_id  from characters JOIN race on race.id=characters.race_id JOIN class on class.id=characters.class_id where user_id = ";
 $query .= $_SESSION["USER_ID"];
 $query .= " order by name asc;";
