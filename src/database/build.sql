@@ -1,3 +1,5 @@
+DROP TABLE battle_characters;
+DROP TABLE battle;
 DROP TABLE parties_characters;
 DROP TABLE characters;
 DROP TABLE race;
@@ -76,6 +78,22 @@ CREATE TABLE parties_characters (
 	FOREIGN KEY (party_id) REFERENCES parties(id),
 	FOREIGN KEY (character_id) REFERENCES characters(id)
 );
+
+CREATE TABLE battle (
+	id SERIAL,
+        PRIMARY KEY (id)
+);
+
+CREATE TABLE battle_characters (
+	id SERIAL,
+	battle_id integer,
+	character_id integer,
+        PRIMARY KEY (id),
+	FOREIGN KEY (battle_id) REFERENCES battle(id),
+	FOREIGN KEY (character_id) REFERENCES characters(id)
+);
+
+
 
 
 
