@@ -42,7 +42,6 @@ $result = pg_query($conn,$insert);
 
 }
 
-
 if (isset($_POST["name_id"])) 
 {
 $query = "delete from characters where id = ";
@@ -52,15 +51,16 @@ $query .= ";";
 $result = pg_query($conn,$query);
 
 }
-
-
-
 ?>
 
-<p><b> Create Character </p></b>
-	
+<table style="width:100%">
+  <tr align="left">
+    <th>Create Character</th>
+    <th>Delete Character</th> 
+  </tr>
+  <tr>
+    <td>
 <form method="post" action="/navigation/create_character.php">
-
 <select name="race_id">
 <?php
 $query = "select id, name from race order by name asc;";
@@ -74,7 +74,6 @@ for($i = 0; $i < $numrows; $i++)
 }
 ?>
 </select>
-
 <select name="class_id">
 <?php
 $query = "select id, name from class order by name asc;";
@@ -88,29 +87,22 @@ for($i = 0; $i < $numrows; $i++)
 }
 ?>
 </select>
-
-
 <p><b> Character name: </p></b>
 <input type="text" name="name">
-
-
 <p><input type="submit" value="CREATE CHARACTER" /></p>
 </form>
 
 
-<p><b> Delete Character </p></b>
-
+</td>
+    <td>
 <form method="post" action="/navigation/create_character.php">
-
 <select name="name_id">
 <?php
 $query = "select id, name from characters where user_id = ";
 $query .= $_SESSION["USER_ID"];  
 $query .= ";";
-
 $result = pg_query($conn,$query);
 $numrows = pg_numrows($result);
-
 for($i = 0; $i < $numrows; $i++)
 {
         $row = pg_fetch_array($result, $i);
@@ -118,10 +110,12 @@ for($i = 0; $i < $numrows; $i++)
 }
 ?>
 </select>
-
 <p><input type="submit" value="DELETE CHARACTER" /></p>
 </form>
 
+</td>
+  </tr>
+</table>
 
 
 <?php
